@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "recommendation.schema.json",
+  "title": "Proposed skill update",
+  "type": "object",
+  "required": ["id", "affected_test_cases", "observed_problem", "root_cause", "root_cause_certainty", "proposed_change", "priority"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^REC-[0-9]{3,}$" },
+    "affected_test_cases": { "type": "array", "items": { "type": "string" } },
+    "observed_problem": { "type": "string" },
+    "evidence": { "type": "string" },
+    "root_cause": { "type": "string" },
+    "root_cause_certainty": { "type": "string", "enum": ["likely", "proven"] },
+    "proposed_change": { "type": "string" },
+    "target_file": { "type": "string", "description": "File/section in the target skill this change applies to." },
+    "example_revision": { "type": "string" },
+    "expected_benefit": { "type": "string" },
+    "possible_side_effects": { "type": "string" },
+    "priority": { "type": "string", "enum": ["critical", "high", "medium", "low"] }
+  }
+}

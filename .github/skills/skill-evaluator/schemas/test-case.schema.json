@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "test-case.schema.json",
+  "title": "Test case",
+  "type": "object",
+  "required": ["id", "category", "objective", "prompt", "rubric_dimensions", "pass_threshold"],
+  "properties": {
+    "id": { "type": "string", "pattern": "^TC-[0-9]{3,}$" },
+    "category": {
+      "type": "string",
+      "enum": ["core", "edge", "ambiguous", "invalid", "complex", "constraint", "format", "refusal", "tool-usage", "not-applicable"]
+    },
+    "objective": { "type": "string", "description": "What this test case is meant to reveal about the target skill." },
+    "prompt": { "type": "string", "description": "The literal user prompt to give both conditions." },
+    "fixtures": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Paths to supporting files/fixtures to provide alongside the prompt."
+    },
+    "expected_output_file": { "type": "string", "description": "Relative path to the expected/TC-NNN.md spec." },
+    "required_elements": { "type": "array", "items": { "type": "string" } },
+    "prohibited_behaviours": { "type": "array", "items": { "type": "string" } },
+    "rubric_dimensions": {
+      "type": "array",
+      "items": { "type": "string" },
+      "minItems": 1,
+      "description": "Subset of reference/dimensions.md relevant to this case."
+    },
+    "scoring_weights": {
+      "type": "object",
+      "additionalProperties": { "type": "number", "minimum": 0 },
+      "description": "Optional per-dimension weight; omitted dimensions default to equal weight."
+    },
+    "pass_threshold": { "type": "number", "minimum": 0, "maximum": 5 },
+    "rationale": { "type": "string", "description": "Why this case was included in the plan." }
+  }
+}

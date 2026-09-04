@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "evaluation-plan.schema.json",
+  "title": "Evaluation plan",
+  "type": "object",
+  "required": ["target_skill", "generated_at", "pass_threshold", "repeats", "test_cases"],
+  "properties": {
+    "target_skill": { "type": "string", "description": "Path to the target skill directory or SKILL.md." },
+    "generated_at": { "type": "string", "format": "date-time" },
+    "pass_threshold": { "type": "number", "minimum": 0, "maximum": 5 },
+    "repeats": { "type": "integer", "minimum": 1 },
+    "model_config": { "type": "object", "description": "Model/agent configuration applied identically to both conditions." },
+    "test_cases": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "category", "file"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^TC-[0-9]{3,}$" },
+          "category": { "type": "string" },
+          "file": { "type": "string", "description": "Relative path to test-cases/TC-NNN.json" }
+        }
+      }
+    }
+  }
+}

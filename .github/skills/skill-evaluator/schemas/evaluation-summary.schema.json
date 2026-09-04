@@ -1,0 +1,52 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "evaluation-summary.schema.json",
+  "title": "Aggregate evaluation summary",
+  "type": "object",
+  "required": ["generated_at", "pass_threshold", "per_test", "aggregate"],
+  "properties": {
+    "generated_at": { "type": "string", "format": "date-time" },
+    "pass_threshold": { "type": "number" },
+    "sample_size_note": { "type": "string", "description": "Caution about statistical significance given the number of cases/repeats." },
+    "per_test": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "test_id": { "type": "string" },
+          "category": { "type": "string" },
+          "with_skill_score": { "type": ["number", "null"] },
+          "baseline_score": { "type": ["number", "null"] },
+          "diff": { "type": ["number", "null"] },
+          "pct_diff": { "type": ["number", "null"] },
+          "with_skill_pass": { "type": ["boolean", "null"] },
+          "baseline_pass": { "type": ["boolean", "null"] },
+          "outcome": { "type": "string", "enum": ["improved", "no meaningful difference", "worse", "inconclusive"] },
+          "repeats": {
+            "type": "object",
+            "properties": {
+              "with_skill": { "type": "object", "properties": { "mean": {"type": "number"}, "min": {"type": "number"}, "max": {"type": "number"}, "stdev": {"type": ["number", "null"]} } },
+              "baseline": { "type": "object", "properties": { "mean": {"type": "number"}, "min": {"type": "number"}, "max": {"type": "number"}, "stdev": {"type": ["number", "null"]} } },
+              "pass_fail_consistent": { "type": ["boolean", "null"] }
+            }
+          }
+        }
+      }
+    },
+    "aggregate": {
+      "type": "object",
+      "properties": {
+        "avg_with_skill_score": { "type": "number" },
+        "avg_baseline_score": { "type": "number" },
+        "with_skill_pass_rate": { "type": "number" },
+        "baseline_pass_rate": { "type": "number" },
+        "improved_count": { "type": "integer" },
+        "unchanged_count": { "type": "integer" },
+        "worse_count": { "type": "integer" },
+        "inconclusive_count": { "type": "integer" },
+        "by_category": { "type": "object" },
+        "by_dimension": { "type": "object" }
+      }
+    }
+  }
+}

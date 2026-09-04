@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "score.schema.json",
+  "title": "Blind score for one test case run",
+  "type": "object",
+  "required": ["test_id", "run", "dimensions", "scores", "justifications", "condition_map"],
+  "properties": {
+    "test_id": { "type": "string", "pattern": "^TC-[0-9]{3,}$" },
+    "run": { "type": "integer", "minimum": 1, "description": "Repeat index, 1 if repeats == 1." },
+    "dimensions": { "type": "array", "items": { "type": "string" } },
+    "scores": {
+      "type": "object",
+      "required": ["A", "B"],
+      "properties": {
+        "A": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0, "maximum": 5 } },
+        "B": { "type": "object", "additionalProperties": { "type": "integer", "minimum": 0, "maximum": 5 } }
+      },
+      "description": "Scored while still blind, keyed by Output A / Output B."
+    },
+    "justifications": {
+      "type": "object",
+      "properties": {
+        "A": { "type": "object", "additionalProperties": { "type": "string" } },
+        "B": { "type": "object", "additionalProperties": { "type": "string" } }
+      }
+    },
+    "condition_map": {
+      "type": "object",
+      "required": ["A", "B"],
+      "properties": {
+        "A": { "type": "string", "enum": ["with-skill", "baseline"] },
+        "B": { "type": "string", "enum": ["with-skill", "baseline"] }
+      },
+      "description": "Filled in only after scoring, from the Step 6 mapping file."
+    }
+  }
+}
